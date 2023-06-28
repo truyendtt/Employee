@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-06-23T17:51:01 ICT" name="Default suite" finished-at="2023-06-23T17:51:16 ICT" duration-ms="14863">
+    <groups>
+    </groups>
+    <test started-at="2023-06-23T17:51:01 ICT" name="Default test" finished-at="2023-06-23T17:51:16 ICT" duration-ms="14863">
+      <class name="tests.UpdateInformationEmployeeSuccessfully">
+        <test-method is-config="true" signature="openWebsite()[pri:0, instance:tests.UpdateInformationEmployeeSuccessfully@2cf3d63b]" started-at="2023-06-23T17:51:01 ICT" name="openWebsite" finished-at="2023-06-23T17:51:06 ICT" duration-ms="5654" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openWebsite -->
+        <test-method signature="UpdateInformationEmployeeSuccessfully()[pri:0, instance:tests.UpdateInformationEmployeeSuccessfully@2cf3d63b]" started-at="2023-06-23T17:51:06 ICT" name="UpdateInformationEmployeeSuccessfully" finished-at="2023-06-23T17:51:15 ICT" duration-ms="8876" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- UpdateInformationEmployeeSuccessfully -->
+      </class> <!-- tests.UpdateInformationEmployeeSuccessfully -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
