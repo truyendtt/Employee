@@ -38,43 +38,31 @@ public class TestBasic {
 				break;
 		}
 	}
-	public String getRetailerName (String envi){
+	private String getResultString(String envi, String variable){
 		String result ="";
+		String key = variable;
 		switch (envi) {
-			case "live": result=readConfigValueByKey("retailerName_LIVE", FILE_TEST_CONFIG);
+			case "live": result=readConfigValueByKey(key+"_LIVE", FILE_TEST_CONFIG);
 				break;
-			case "prelive": result=readConfigValueByKey("retailerName_PRELIVE", FILE_TEST_CONFIG);;
+			case "prelive": result=readConfigValueByKey(key+"_PRELIVE", FILE_TEST_CONFIG);;
 				break;
-			case "staging": result=readConfigValueByKey("retailerName_STAGING", FILE_TEST_CONFIG);;
+			case "staging": result=readConfigValueByKey(key+"_STAGING", FILE_TEST_CONFIG);;
 				break;
 		}
+		return result;
+	}
+	public String getRetailerName (String envi){
+		String result =getResultString(envi, "retailerName");
 		return result;
 	}
 	public String getUserName (String envi){
-		String result ="";
-		switch (envi) {
-			case "live": result=readConfigValueByKey("userName_LIVE", FILE_TEST_CONFIG);
-				break;
-			case "prelive": result=readConfigValueByKey("userName_PRELIVE", FILE_TEST_CONFIG);;
-				break;
-			case "staging": result=readConfigValueByKey("userName_STAGING", FILE_TEST_CONFIG);;
-				break;
-		}
+		String result =getResultString(envi, "userName");
 		return result;
 	}
 	public String getPassword (String envi){
-		String result ="";
-		switch (envi) {
-			case "live": result=readConfigValueByKey("password_LIVE", FILE_TEST_CONFIG);
-				break;
-			case "prelive": result=readConfigValueByKey("password_PRELIVE", FILE_TEST_CONFIG);;
-				break;
-			case "staging": result=readConfigValueByKey("password_STAGING", FILE_TEST_CONFIG);;
-				break;
-		}
+		String result =getResultString(envi, "password");
 		return result;
 	}
-
 	public String readConfigValueByKey(String Key, String fileConfig) {
 		String resultValue = "";
 		Properties properties = new Properties();
