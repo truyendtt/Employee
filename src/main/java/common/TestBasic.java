@@ -2,6 +2,7 @@ package common;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -16,29 +17,71 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TestBasic {
 	public WebDriver driver;
-	public  static final String FILE_CONFIG="\\config\\ProjectConfiguration.properties";
-	public void openWebsite(String browser) {
+	public  static final String FILE_CONFIG="\\src\\main\\resources\\config\\ProjectConfiguration.properties";
+	String FILE_TEST_CONFIG= "\\src\\test\\resources\\testData\\testConfig.properties";
+	public void openWebsite(String browser, String envi) {
 		if (browser.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.gecko",
-					readConfigValueByKey("gecko_driver"));
+			System.setProperty("webdriver.gecko.gecko", readConfigValueByKey("gecko_driver", FILE_CONFIG));
 			driver = new FirefoxDriver();
 			System.out.print("firefoxff" + driver);
 		} else if(browser.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver",
-					readConfigValueByKey("chrome_dirver"));
+			System.setProperty("webdriver.chrome.driver", readConfigValueByKey("chrome_dirver", FILE_CONFIG));
 			driver = new ChromeDriver();
 		}
-		
-		driver.get(readConfigValueByKey("url"));
 		driver.manage().window().maximize();
+		switch (envi) {
+			case "live": driver.get(readConfigValueByKey("url_LIVE", FILE_TEST_CONFIG));
+				break;
+			case "prelive": driver.get(readConfigValueByKey("url_PRELIVE", FILE_TEST_CONFIG));
+				break;
+			case "staging": driver.get(readConfigValueByKey("url_STAGING", FILE_TEST_CONFIG));
+				break;
+		}
 	}
-	public String readConfigValueByKey(String Key) {
+	public String getRetailerName (String envi){
+		String result ="";
+		switch (envi) {
+			case "live": result=readConfigValueByKey("retailerName_LIVE", FILE_TEST_CONFIG);
+				break;
+			case "prelive": result=readConfigValueByKey("retailerName_PRELIVE", FILE_TEST_CONFIG);;
+				break;
+			case "staging": result=readConfigValueByKey("retailerName_STAGING", FILE_TEST_CONFIG);;
+				break;
+		}
+		return result;
+	}
+	public String getUserName (String envi){
+		String result ="";
+		switch (envi) {
+			case "live": result=readConfigValueByKey("userName_LIVE", FILE_TEST_CONFIG);
+				break;
+			case "prelive": result=readConfigValueByKey("userName_PRELIVE", FILE_TEST_CONFIG);;
+				break;
+			case "staging": result=readConfigValueByKey("userName_STAGING", FILE_TEST_CONFIG);;
+				break;
+		}
+		return result;
+	}
+	public String getPassword (String envi){
+		String result ="";
+		switch (envi) {
+			case "live": result=readConfigValueByKey("password_LIVE", FILE_TEST_CONFIG);
+				break;
+			case "prelive": result=readConfigValueByKey("password_PRELIVE", FILE_TEST_CONFIG);;
+				break;
+			case "staging": result=readConfigValueByKey("password_STAGING", FILE_TEST_CONFIG);;
+				break;
+		}
+		return result;
+	}
+
+	public String readConfigValueByKey(String Key, String fileConfig) {
 		String resultValue = "";
 		Properties properties = new Properties();
 		InputStream inputStream=null;
 		String currentDir= System.getProperty("user.dir");
 		try {
-			inputStream = new FileInputStream(currentDir + FILE_CONFIG);
+			inputStream = new FileInputStream(currentDir + fileConfig);
 			properties.load(inputStream);
 			resultValue = properties.getProperty(Key);
 		} catch (Exception e) {

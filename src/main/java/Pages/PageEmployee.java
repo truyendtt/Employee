@@ -30,6 +30,7 @@ public class PageEmployee extends Page {
 	public By txtNameEmployee= By.xpath("//td[6]/span[1]");
 	By toastMessage= By.className("toast-message");
 	By btnUpdateInfor = By.xpath("//div[@class='ts-group-btn']//button[2]");
+	By btnSettingSalaryTab= By.xpath("//li//span[contains(.,'Thiết lập lương')]");
 	public PageEmployee(WebDriver dr) {
 		super(dr);
 		this.driverWeb= dr;
@@ -60,5 +61,10 @@ public class PageEmployee extends Page {
 		clickFromElement(txtNameEmployee);
 		clickFromElement(btnUpdateInfor);
 		return new UpdateEmployeePage(driverWeb);
+	}
+	public SettingSalaryTab clickSettingSalaryTab() {
+		clickFromElement(txtNameEmployee);
+		clickFromElement(btnSettingSalaryTab);
+		return new SettingSalaryTab(driverWeb);
 	}
 }

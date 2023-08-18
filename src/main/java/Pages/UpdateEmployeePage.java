@@ -28,6 +28,7 @@ public class UpdateEmployeePage extends Page{
 	By btnSave= By.xpath("//* [@ng-click='vm.handleClickSave()']");
 	By btnConfirm = By.xpath("//button[contains(.,'Đồng ý')]");
 	By txtlabelUploadSuccessfully = By.xpath("//strong[contains(.,'Done')]");
+	By btnSalarySetting= By.xpath("//a[contains(.,'Thiết lập lương')]");
 	public UpdateEmployeePage(WebDriver dr) {
 		super(dr);
 		this.driverWeb= dr;
@@ -48,8 +49,9 @@ public class UpdateEmployeePage extends Page{
 		}
 		String xpathMonth= String.format("//a[contains(.,'%s')]", getInputMonth(inputDate));
 		driverWeb.findElement(By.xpath(xpathMonth)).click();
-		inputDate = inputDate.replace("/", " ");
-		String [] arrayDate= inputDate.split(" ");
+//		inputDate = inputDate.replace("/", " ");
+//		String [] arrayDate= inputDate.split(" ");
+		String [] arrayDate= getArrrayDate(inputDate);
 		String day = new String(arrayDate[0]);
 		String xpathDay= String.format("//a[contains(.,'%s')]", day);
 		clickFromElement(By.xpath(xpathDay));
@@ -71,15 +73,17 @@ public class UpdateEmployeePage extends Page{
 		return times;
 	}
 	private int getInputYear(String inputDate){
-		inputDate = inputDate.replace("/", " ");
-		String [] arrayDate= inputDate.split(" ");
+//		inputDate = inputDate.replace("/", " ");
+//		String [] arrayDate= inputDate.split(" ");
+		String [] arrayDate = getArrrayDate(inputDate);
 		String year = new String(arrayDate[2]);
 		int inputYear= Integer.parseInt(year);
 		return inputYear;
 	}
 	private String getInputMonth(String inputDate){
-		inputDate = inputDate.replace("/", " ");
-		String [] arrayDate= inputDate.split(" ");
+//		inputDate = inputDate.replace("/", " ");
+//		String [] arrayDate= inputDate.split(" ");
+		String [] arrayDate= getArrrayDate(inputDate);
 		String Month = new String(arrayDate[1]);
 		String result= "";
 		switch (Month) {
@@ -110,6 +114,11 @@ public class UpdateEmployeePage extends Page{
 		}
 		return result;
 	}
+	private String [] getArrrayDate(String inputDate){
+		inputDate = inputDate.replace("/", " ");
+		String [] arrayDate= inputDate.split(" ");
+		return arrayDate;
+	}
 	public void updateGender(String inputGender) {
 		if (inputGender== "female") {
 		driverWeb.findElement(radioButtonFemale).click();}
@@ -125,7 +134,10 @@ public class UpdateEmployeePage extends Page{
 		driverWeb.findElement(searchDerpartmentList).sendKeys(inputDerpartment);
 		String xpathResultDerpartmanetList = String.format("//ul[@id='department_listbox']//li[contains(.,'%s')]", inputDerpartment);
 		//driverWeb.findElement(By.xpath(xpathResultDerpartmanetList)).click();
-		clickFromElement(By.xpath(xpathResultDerpartmanetList));
+		if (driverWeb.findElement(By.xpath(xpathResultDerpartmanetList)).isEnabled()){
+			clickFromElement(By.xpath(xpathResultDerpartmanetList));
+		}
+
 	}
 	public void updateJobTitle(String inputJobTitle) {
 		
@@ -144,11 +156,18 @@ public class UpdateEmployeePage extends Page{
 	}
 	public void clickSaveInformationUpdaed(){
 		clickFromElement(btnSave);
-		//clickFromElement(btnConfirm);
+		if (driverWeb.findElement(btnConfirm).isEnabled()){
+			clickFromElement(btnConfirm);
+		}
+
 	}
 //	public String getActualNickName(){
 //		driverWeb.findElement(PageEmployee.txtNameEmployee).click();
 //
 //
 //	}
+	public SalarySettingPage clickSalarySettingTab(){
+		driverWeb.findElement(btnSalarySetting).click();
+		return new SalarySettingPage(driverWeb);
+	}
 }
